@@ -117,8 +117,9 @@ class MealTableViewController: UITableViewController {
         case "AddItem":
             os_log("Adding a new meal.", log: OSLog.default, type: .debug)
             
+        //Aqui  hemos cambiado el destination para que el objetivo del segue sea nuestro MealTabBarController
         case "ShowDetail":
-            guard let mealDetailViewController = segue.destination as? MealViewController else {
+            guard let mealDetailViewController = segue.destination as? MealTabBarController else {
                 fatalError("Unexpected destination: \(segue.destination)")
             }
             
@@ -132,7 +133,6 @@ class MealTableViewController: UITableViewController {
             
             let selectedMeal = meals[indexPath.row]
             mealDetailViewController.meal = selectedMeal
-            
         default:
             fatalError("Unexpected Segue Identifier; \(segue.identifier)")
         }
@@ -140,9 +140,10 @@ class MealTableViewController: UITableViewController {
 
     
     //MARK: Actions
-    
+    // En esta funcion hemos cambiado como fuente del segue, a nuestro MealTabBarController.
+    // Esta funcion se llama cuando se sale del TabBar ya sea guardandoo cancenlando los cambios
     @IBAction func unwindToMealList(sender: UIStoryboardSegue) {
-        if let sourceViewController = sender.source as? MealViewController, let meal = sourceViewController.meal {
+        if let sourceViewController = sender.source as? MealTabBarController, let meal = sourceViewController.meal {
             
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
                 // Update an existing meal.
